@@ -5,20 +5,20 @@
     <tr>
       <th style="border: 1px solid;">Athlete</th>
       <th style="border: 1px solid;">Test</th>
-      <th style="border: 1px solid;">Value</th>
+      <th style="border: 1px solid;">Value (average)</th>
     </tr>
   </thead>
   <tbody>
     <% @athletes.each do |individual_athlete| %>
       <tr>
         <td style="border: 1px solid;">
-          <%= individual_athlete['athlete'] %>
+          <%= individual_athlete[:athlete] %>
         </td>
         <td style="border: 1px solid;">
-          <%= individual_athlete['test'] %>
+          <%= individual_athlete[:test] %>
         </td>
         <td style="border: 1px solid;">
-          <%= individual_athlete['summary'] %>
+          <%= individual_athlete[:average] %>
         </td>
       </tr>
     <% end %>

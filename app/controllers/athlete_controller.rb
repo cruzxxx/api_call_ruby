@@ -3,7 +3,7 @@ class AthleteController < ApplicationController
   def index
     post_request = HTTParty.post(ENV['GET_TOKEN_URL'],
                                  :headers =>
-                                     { 'Content-Type' => 'application/x-www-form-urlencoded',
+                                     {'Content-Type' => 'application/x-www-form-urlencoded',
                                      },
                                  :body => {
                                      'client_id' => ENV['CLIENT_ID'],
@@ -19,14 +19,25 @@ class AthleteController < ApplicationController
                                 "Content-Type" => "application/json",
                                 "Authorization" => "Bearer #{api_key}"
                             })
-    @athletes = get_data
 
-    # get_data.each do |athlete|
-    #   #byebug
-    #   # @athletes = athlete['athlete']
-    #   # @tests = athlete['test']
-    #   # @summaries = athlete['summary']
-    # end
+    @all_data = get_data
+
+    athletes = []
+    # Iterate through data returned from API
+    get_data.each do |athlete|
+      sum = 0
+      count = 0
+      # Iterate through summary to calculate average values
+      athlete['summary'].each do |metric|
+        count += 1
+        sum = sum + metric['value']
+      end
+      average = sum / count
+      athletes_data = {'athlete': athlete['athlete'],
+                         'test': athlete['test'],
+                         'average': average}
+      athletes.append(athletes_data)
+    end
+    @athletes = athletes
   end
-
 end
